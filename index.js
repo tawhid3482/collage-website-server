@@ -28,7 +28,12 @@ async function run() {
     const departmentCollection = client
       .db("collageDb")
       .collection("department");
-      const eventsCollection = client.db('collageDb').collection('events')
+
+   const eventsCollection = client.db('collageDb').collection('events')
+   const applicationCollection = client.db('collageDb').collection('application')
+   const newsCollection = client.db('collageDb').collection('news')
+   const serviceCollection = client.db('collageDb').collection('services')
+   const uniCollection = client.db('collageDb').collection('uniEvents')
 
     app.get("/department", async (req, res) => {
       const result = await departmentCollection.find().toArray();
@@ -37,6 +42,22 @@ async function run() {
 
     app.get("/events",async(req,res)=>{
       const result = await eventsCollection.find().toArray()
+      res.send(result)
+    })
+    app.get("/application",async(req,res)=>{
+      const result = await applicationCollection.find().toArray()
+      res.send(result)
+    })
+    app.get("/news",async(req,res)=>{
+      const result = await newsCollection.find().toArray()
+      res.send(result)
+    })
+    app.get("/services",async(req,res)=>{
+      const result = await serviceCollection.find().toArray()
+      res.send(result)
+    })
+    app.get("/uniEvents",async(req,res)=>{
+      const result = await uniCollection.find().toArray()
       res.send(result)
     })
     
