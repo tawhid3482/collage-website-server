@@ -66,7 +66,7 @@ async function run() {
       const result = await cartCollection.insertOne(cartItem)
       res.send(result)
     })
-
+    app.get()
 
 
     // Send a ping to confirm a successful connectio
