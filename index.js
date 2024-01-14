@@ -33,6 +33,7 @@ async function run() {
    const newsCollection = client.db('collageDb').collection('news')
    const serviceCollection = client.db('collageDb').collection('services')
    const uniCollection = client.db('collageDb').collection('uniEvents')
+   const cartCollection = client.db('collageDb').collection('carts')
 
     app.get("/department", async (req, res) => {
       const result = await departmentCollection.find().toArray();
@@ -60,6 +61,14 @@ async function run() {
       res.send(result)
     })
     
+    app.post('/carts',async(req,res)=>{
+      const cartItem = req.body
+      const result = await cartCollection.insertOne(cartItem)
+      res.send(result)
+    })
+
+
+
     // Send a ping to confirm a successful connectio
     await client.db("admin").command({ ping: 1 });
     console.log(
