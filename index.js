@@ -41,6 +41,7 @@ async function run() {
       res.send(result);
     });
 
+    // event 
     app.get("/events",async(req,res)=>{
       const result = await eventsCollection.find().toArray()
       res.send(result)
