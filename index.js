@@ -21,7 +21,6 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
     const departmentCollection = client
@@ -35,6 +34,8 @@ async function run() {
    const uniCollection = client.db('collageDb').collection('uniEvents')
    const cartCollection = client.db('collageDb').collection('carts')
 
+
+   // department 
     app.get("/department", async (req, res) => {
       const result = await departmentCollection.find().toArray();
       res.send(result);
