@@ -51,6 +51,7 @@ async function run() {
       const result = await applicationCollection.find().toArray()
       res.send(result)
     })
+    // news
     app.get("/news",async(req,res)=>{
       const result = await newsCollection.find().toArray()
       res.send(result)
