@@ -46,6 +46,7 @@ async function run() {
       const result = await eventsCollection.find().toArray()
       res.send(result)
     })
+    //application
     app.get("/application",async(req,res)=>{
       const result = await applicationCollection.find().toArray()
       res.send(result)
