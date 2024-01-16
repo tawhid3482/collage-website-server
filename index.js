@@ -27,6 +27,7 @@ async function run() {
       .db("collageDb")
       .collection("department");
 
+   const userCollection = client.db('collageDb').collection('users')
    const eventsCollection = client.db('collageDb').collection('events')
    const applicationCollection = client.db('collageDb').collection('application')
    const newsCollection = client.db('collageDb').collection('news')
