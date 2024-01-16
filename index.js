@@ -35,7 +35,12 @@ async function run() {
    const uniCollection = client.db('collageDb').collection('uniEvents')
    const cartCollection = client.db('collageDb').collection('carts')
 
-
+    //users
+    app.post('/users',async(req,res)=>{
+      const user = req.body;
+      const result= await userCollection.insertOne(user)
+      res.send(result)
+    })
    // department 
     app.get("/department", async (req, res) => {
       const result = await departmentCollection.find().toArray();
