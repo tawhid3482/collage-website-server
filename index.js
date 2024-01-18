@@ -27,6 +27,7 @@ async function run() {
       .db("collageDb")
       .collection("department");
 
+      // al collection here
    const userCollection = client.db('collageDb').collection('users')
    const eventsCollection = client.db('collageDb').collection('events')
    const applicationCollection = client.db('collageDb').collection('application')
@@ -68,15 +69,17 @@ async function run() {
       const result = await newsCollection.find().toArray()
       res.send(result)
     })
+    //services
     app.get("/services",async(req,res)=>{
       const result = await serviceCollection.find().toArray()
       res.send(result)
     })
+    // uniEvents
     app.get("/uniEvents",async(req,res)=>{
       const result = await uniCollection.find().toArray()
       res.send(result)
     })
-    
+    // carts
     app.post('/carts',async(req,res)=>{
       const cartItem = req.body
       const result = await cartCollection.insertOne(cartItem)
