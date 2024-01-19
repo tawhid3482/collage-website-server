@@ -97,7 +97,8 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
-    // delete the text 
+    // delete the text okay
+
   }
 }
 run().catch(console.dir);
