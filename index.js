@@ -89,6 +89,11 @@ async function run() {
       const result = await cartCollection.find().toArray()
       res.send(result)
     })
+    app.delete('/carts/:id',async(req,res)=>{
+      const query = {}
+      const result = await cartCollection.deleteOne(query)
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
