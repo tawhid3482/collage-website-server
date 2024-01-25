@@ -39,6 +39,7 @@ async function run() {
     const cartCollection = client.db("collageDb").collection("carts");
 
     //users
+    // i am sorry today i am week
     app.post("/users", async (req, res) => {
       const user = req.body;
       const query = { email: user.email };
