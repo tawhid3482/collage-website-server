@@ -40,11 +40,18 @@ async function run() {
     const cartCollection = client.db("collageDb").collection("carts");
 
     // jwt
-app.post('jwt',async(req,res)=>{
-  const user = req.body;
-  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn:'1h'})
-  res.send({token})
-})
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+      res.send({ token });
+    });
+    // middleWare for jwt
+    const verifyToken = (req,res,next)=>{
+      console.log(req.headers)
+      next()
+    }
     //users
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -58,6 +65,7 @@ app.post('jwt',async(req,res)=>{
 
     app.get("/users", async (req, res) => {
       const result = await userCollection.find().toArray();
+      console.log(req.headers)
       res.send(result);
     });
 
