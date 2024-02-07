@@ -50,6 +50,10 @@ async function run() {
     // middleWare for jwt
     const verifyToken = (req,res,next)=>{
       console.log(req.headers)
+      if(!req.headers.authorization){
+        return res.status(401).send({message:'forbidden access'})
+      }
+      const token = req.headers.authorization.split(' ')[1]
       next()
     }
     //users
@@ -63,7 +67,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/users", async (req, res) => {
+    app.get("/users", verifyToken, async (req, res) => {
       const result = await userCollection.find().toArray();
       console.log(req.headers)
       res.send(result);
