@@ -177,6 +177,7 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
+    // delete the text
   }
 }
 run().catch(console.dir);
