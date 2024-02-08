@@ -28,7 +28,7 @@ async function run() {
       .db("collageDb")
       .collection("department");
 
-    // al collection here
+    // All collection here
     const userCollection = client.db("collageDb").collection("users");
     const eventsCollection = client.db("collageDb").collection("events");
     const applicationCollection = client
@@ -50,7 +50,6 @@ async function run() {
 
     // middleWare for jwt
     const verifyToken = (req, res, next) => {
-      console.log(req.headers);
       if (!req.headers.authorization) {
         return res.status(401).send({ message: "unauthorized access" });
       }
