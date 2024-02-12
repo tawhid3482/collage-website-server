@@ -133,15 +133,44 @@ async function run() {
       const result = await departmentCollection.find().toArray();
       res.send(result);
     });
-    app.get('/department/:id',async(req,res)=>{
+    app.get("/department/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id:new ObjectId(id)};
-      const result = await departmentCollection.findOne(query)
-      res.send(result) 
-    })
+      const query = { _id: new ObjectId(id) };
+      const result = await departmentCollection.findOne(query);
+      res.send(result);
+    });
     app.post("/department", verifyToken, verifyAdmin, async (req, res) => {
       const course = req.body;
       const result = await departmentCollection.insertOne(course);
+      res.send(result);
+    });
+    app.patch("/department/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const course = req.body;
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          name: course.name,
+          campus: course.campus,
+          courseId: course.courseId,
+          credit: course.credit,
+          dateRange: course.dateRange,
+          department: course.department,
+          description1: course.description1,
+          description2: course.description2,
+          description3: course.description3,
+          fee: course.fee,
+          image: course.image,
+          insImage: course.insImage,
+          instructor: course.instructor,
+          level: course.level,
+          method: course.method,
+          scholarship: course.scholarship,
+          time: course.time,
+          semester: course.semester,
+        },
+      };
+      const result = await departmentCollection.updateOne(filter, updatedDoc);
       res.send(result);
     });
     app.delete(
@@ -150,12 +179,11 @@ async function run() {
       verifyAdmin,
       async (req, res) => {
         const id = req.params.id;
-        const query = {_id: new ObjectId(id)}
-        const result = await departmentCollection.deleteOne(query)
-        res.send(result)
+        const query = { _id: new ObjectId(id) };
+        const result = await departmentCollection.deleteOne(query);
+        res.send(result);
       }
     );
- 
 
     // event
     app.get("/events", async (req, res) => {
