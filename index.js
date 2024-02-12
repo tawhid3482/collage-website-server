@@ -133,6 +133,12 @@ async function run() {
       const result = await departmentCollection.find().toArray();
       res.send(result);
     });
+    app.get('/department/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id:new ObjectId(id)};
+      const result = await departmentCollection.findOne(query)
+      res.send(result) 
+    })
     app.post("/department", verifyToken, verifyAdmin, async (req, res) => {
       const course = req.body;
       const result = await departmentCollection.insertOne(course);
@@ -149,6 +155,7 @@ async function run() {
         res.send(result)
       }
     );
+ 
 
     // event
     app.get("/events", async (req, res) => {
