@@ -71,7 +71,7 @@ async function run() {
       if (!isAdmin) {
         return res.status(401).send({ message: "forbidden access" });
       }
-      next()
+      next();
     };
     //users
     app.post("/users", async (req, res) => {
@@ -104,35 +104,51 @@ async function run() {
       res.send({ admin });
     });
 
-    app.delete("/users/:id", verifyToken,verifyAdmin, async (req, res) => {
+    app.delete("/users/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await userCollection.deleteOne(query);
       res.send(result);
     });
 
-    app.patch("/users/admin/:id", verifyToken,verifyAdmin, async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const updatedDoc = {
-        $set: {
-          role: "admin",
-        },
-      };
-      const result = await userCollection.updateOne(query, updatedDoc);
-      res.send(result);
-    });
+    app.patch(
+      "/users/admin/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const updatedDoc = {
+          $set: {
+            role: "admin",
+          },
+        };
+        const result = await userCollection.updateOne(query, updatedDoc);
+        res.send(result);
+      }
+    );
 
     // department
     app.get("/department", async (req, res) => {
       const result = await departmentCollection.find().toArray();
       res.send(result);
     });
-    app.post("/department",async(req,res)=>{
+    app.post("/department", verifyToken, verifyAdmin, async (req, res) => {
       const course = req.body;
-      const result = await departmentCollection.insertOne(course)
-      res.send(result)
-    })
+      const result = await departmentCollection.insertOne(course);
+      res.send(result);
+    });
+    app.delete(
+      "/department/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)}
+        const result = await departmentCollection.deleteOne(query)
+        res.send(result)
+      }
+    );
 
     // event
     app.get("/events", async (req, res) => {
