@@ -50,7 +50,7 @@ async function run() {
 
     // middleWare for jwt
     const verifyToken = (req, res, next) => {
-      console.log(req.headers);
+      // console.log(req.headers);
       if (!req.headers.authorization) {
         return res.status(401).send({ message: "unauthorized access" });
       }
@@ -128,6 +128,11 @@ async function run() {
       const result = await departmentCollection.find().toArray();
       res.send(result);
     });
+    app.post("/department",async(req,res)=>{
+      const course = req.body;
+      const result = await departmentCollection.insertOne(course)
+      res.send(result)
+    })
 
     // event
     app.get("/events", async (req, res) => {
