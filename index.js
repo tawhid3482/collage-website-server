@@ -48,7 +48,7 @@ async function run() {
       res.send({ token });
     });
 
-    // middleWare for 
+    // middleWare for jwt
     const verifyToken = (req, res, next) => {
       // console.log(req.headers);
       if (!req.headers.authorization) {
