@@ -75,8 +75,7 @@ async function run() {
       next();
     };
 
-    //Payment-stripe
-    
+    //Payment-stripe-api
     app.post("/create-payment-intent", async (req, res) => {
       const { fee } = req.body;
       const amount = parseInt(fee * 100);
