@@ -102,7 +102,7 @@ async function run() {
 
     })
     app.get('/payments/:email',verifyToken, async(req,res)=>{
-      const query= {eamil: req.params.email}
+      const query= {email: req.params.email}
       if(req.params.email !== req.decoded.email){
         return res.status(403).send({message:'forbidden access'})
       }
