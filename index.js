@@ -39,7 +39,7 @@ async function run() {
     const serviceCollection = client.db("collageDb").collection("services");
     const uniCollection = client.db("collageDb").collection("uniEvents");
     const cartCollection = client.db("collageDb").collection("carts");
-
+    const paymentCollection = client.db('collageDb').collection('payments')
     // jwt
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -75,7 +75,7 @@ async function run() {
       next();
     };
 
-    //Payment-api
+    //Payment-stripe
     app.post("/create-payment-intent", async (req, res) => {
       const { fee } = req.body;
       const amount = parseInt(fee * 100);
@@ -89,6 +89,14 @@ async function run() {
         clientSecret: paymentIntent.client_secret,
       });
     });
+    // payment api
+    app.post('/payments',async(req,res)=>{
+      const payment = req.body;
+      const paymentResults = await paymentCollection.insertOne(payment)
+      console.log(payment)
+      res.send(paymentResults)
+
+    })
     //users
     app.post("/users", async (req, res) => {
       const user = req.body;
