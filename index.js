@@ -94,8 +94,20 @@ async function run() {
       const payment = req.body;
       const paymentResults = await paymentCollection.insertOne(payment)
       console.log(payment)
-      res.send(paymentResults)
+      const query = {_id: {
+        $in: payment.cartIds.map(id=>new ObjectId(id))
+      }}
+      const deleteResult= await cartCollection.deleteMany(query)
+      res.send({paymentResults,deleteResult})
 
+    })
+    app.get('/payments/:email',verifyToken, async(req,res)=>{
+      const query= {eamil: req.params.email}
+      if(req.params.email !== req.decoded.email){
+        return res.status(403).send({message:'forbidden access'})
+      }
+      const result = await paymentCollection.find(query).toArray()
+      res.send(result)
     })
     //users
     app.post("/users", async (req, res) => {
