@@ -94,7 +94,7 @@ async function run() {
     app.post('/payments',async(req,res)=>{
       const payment = req.body;
       const paymentResults = await paymentCollection.insertOne(payment)
-      console.log(payment)
+      // console.log(payment)
       const query = {_id: {
         $in: payment.cartIds.map(id=>new ObjectId(id))
       }}
@@ -147,7 +147,7 @@ async function run() {
 
     app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
       const result = await userCollection.find().toArray();
-      console.log(req.headers);
+      // console.log(req.headers);
       res.send(result);
     });
 
