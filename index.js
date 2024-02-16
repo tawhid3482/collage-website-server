@@ -109,6 +109,30 @@ async function run() {
       const result = await paymentCollection.find(query).toArray()
       res.send(result)
     })
+
+    //admin stats
+    app.get('/admin-stats',async(req,res)=>{
+      const students = await userCollection.estimatedDocumentCount()
+      const course = await departmentCollection.estimatedDocumentCount()
+      const result = await paymentCollection
+      .aggregate([
+        {
+          $group: {
+            _id: null,
+            totalRevenue: {
+              $sum: "$fee",
+            },
+          },
+        },
+      ])
+      .toArray();
+    const revenue = result.length > 0 ? result[0].totalRevenue : 0;
+      res.send({
+        students,
+        course,
+        revenue
+      })
+    })
     //users
     app.post("/users", async (req, res) => {
       const user = req.body;
