@@ -40,6 +40,7 @@ async function run() {
     const uniCollection = client.db("collageDb").collection("uniEvents");
     const cartCollection = client.db("collageDb").collection("carts");
     const paymentCollection = client.db('collageDb').collection('payments')
+    const myCourseCollection = client.db('collageDb').collection('myCourse')
     // jwt
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -111,7 +112,7 @@ async function run() {
     })
 
     //admin stats
-    app.get('/admin-stats',async(req,res)=>{
+    app.get('/admin-stats',verifyToken,verifyAdmin, async(req,res)=>{
       const students = await userCollection.estimatedDocumentCount()
       const course = await departmentCollection.estimatedDocumentCount()
       const result = await paymentCollection
@@ -287,6 +288,22 @@ async function run() {
       res.send(result);
     });
 
+    // my course
+    app.post("/myCourse", async (req, res) => {
+      const course = req.body;
+      const result = await myCourseCollection.insertOne(course);
+      res.send(result);
+    });
+    app.get("/myCourse", async (req, res) => {
+      const result = await myCourseCollection.find().toArray();
+      res.send(result);
+    });
+    app.delete("/myCourse/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await myCourseCollection.deleteOne(query);
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
